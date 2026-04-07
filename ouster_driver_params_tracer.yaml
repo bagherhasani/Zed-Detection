@@ -1,0 +1,35 @@
+ouster/os_driver:
+  ros__parameters:
+    # Change these two to match your network
+    sensor_hostname: "192.168.1.20"
+    udp_dest: "192.168.1.2"
+
+    # Keep all timing on ROS time (best for SLAM/TF)
+    timestamp_mode: "TIME_FROM_ROS_TIME"
+
+    # We'll publish our own mounting TF(s)
+    pub_static_tf: false
+
+    # Frames (must match slam/nav2 config)
+    sensor_frame: "os_sensor"
+    lidar_frame: "os_lidar"
+    imu_frame: "os_imu"
+    point_cloud_frame: "os_lidar"
+
+    # Reduce CPU: only publish what we need
+    proc_mask: "IMU|PCL|SCAN"
+
+    # Save metadata so we can compute the correct horizontal scan_ring
+    metadata: "/tmp/ouster_metadata.json"
+
+    # Pick a near-horizontal ring (adjust per sensor model)
+    # Computed from /tmp/ouster_metadata.json: ring 63 is closest to 0 deg
+    scan_ring: 63
+
+    # Keep close obstacle returns for collision avoidance
+    min_range: 0.25
+    max_range: 30.0
+
+    # Robustness
+    attempt_reconnect: true
+    dormant_period_between_reconnects: 1.0

@@ -1,0 +1,93 @@
+# Terminal 1: CAN + Tracer base driver
+sudo ip link set can0 down 2>/dev/null || true
+sudo ip link set can0 type can bitrate 500000 restart-ms 100
+sudo ip link set can0 txqueuelen 1024
+sudo ip link set can0 up
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch tracer_base tracer_base.launch.py port_name:=can0
+
+# Terminal 2: Robot description (URDF -> TF)
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch tracer_description description.launch.py
+
+# Terminal 3: Ouster lidar
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch ouster_ros driver.launch.py params_file:="/home/user/ros2_ws/src/zed-detection /ouster_driver_params_tracer.yaml" viz:=False
+
+# Terminal 4: SLAM (real robot time, not /clock)
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:="/home/user/ros2_ws/src/zed-detection /mapper_params_online_async_ouster.yaml" use_sim_time:=false
+
+# Terminal 5: Nav2
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch nav2_bringup navigation_launch.py params_file:="/home/user/ros2_ws/src/zed-detection /nav2_params_tracer_ouster_slam.yaml" use_sim_time:=false autostart:=true use_composition:=False
+
+# Terminal 6: RViz (preconfigured Nav2 view)
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+rviz2 -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz
+sudo ip link set can0 down 2>/dev/null || true
+sudo ip link set can0 type can bitrate 500000 restart-ms 100
+sudo ip link set can0 txqueuelen 1024
+sudo ip link set can0 up
+
+
+
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch tracer_base tracer_base.launch.py port_name:=can0
+
+
+
+
+
+
+ T1: Tracer base driver
+source ~/ros2_ws/install/setup.bash
+ros2 launch tracer_base tracer_base.launch.py port_name:=can0
+
+# T2: Robot description (URDF -> TF)
+source ~/ros2_ws/install/setup.bash
+ros2 launch tracer_description description.launch.py
+
+# T3: Ouster lidar
+source ~/ros2_ws/install/setup.bash
+ros2 launch ouster_ros driver.launch.py params_file:="/home/user/ros2_ws/src/zed-detection /ouster_driver_params_tracer.yaml" viz:=False
+
+# T4: SLAM
+source ~/ros2_ws/install/setup.bash
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:="/home/user/ros2_ws/src/zed-detection /mapper_params_online_async_ouster.yaml"
+
+# T5: Nav2
+source ~/ros2_ws/install/setup.bash
+ros2 launch nav2_bringup navigation_launch.py params_file:="/home/user/ros2_ws/src/zed-detection /nav2_params_tracer_ouster_slam.yaml" use_sim_time:=false autostart:=true use_composition:=False
+
+# T6: RViz
+source ~/ros2_ws/install/setup.bash
+rviz2 -d /opt/ros/humble/share/nav2_bringup/rviz/nav2_default_view.rviz
+
+# Terminal 1: Tracer base
+source ~/ros2_ws/install/setup.bash
+ros2 launch tracer_base tracer_base.launch.py port_name:=can0
+
+# Terminal 2: Robot description
+source ~/ros2_ws/install/setup.bash
+ros2 launch tracer_description description.launch.py
+
+# Terminal 3: Ouster driver
+source ~/ros2_ws/install/setup.bash
+ros2 launch ouster_ros driver.launch.py params_file:=/home/user/ros2_ws/src/zed-detection\ /ouster_driver_params_tracer.yaml viz:=False
+
+# Terminal 4: SLAM
+source ~/ros2_ws/install/setup.bash
+ros2 launch slam_toolbox online_async_launch.py slam_params_file:="/home/user/ros2_ws/src/zed-detection /mapper_params_online_async_ouster.yaml"
+
+# Terminal 5: Nav2
+source ~/ros2_ws/install/setup.bash
+ros2 launch nav2_bringup navigation_launch.py params_file:="/home/user/ros2_ws/src/zed-detection /nav2_params_tracer_ouster_slam.yaml" use_sim_time:=false autostart:=true use_composition:=False

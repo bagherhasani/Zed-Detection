@@ -1,0 +1,7 @@
+osnet_x025_reid.engine
+*.engine
+__pycache__/
+*.pyc
+.pytest_cache/
+zed-color-backup-claude.py
+shirt_snapshot.jpg
