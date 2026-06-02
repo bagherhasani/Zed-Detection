@@ -9,7 +9,7 @@
   Your browser does not support the video tag.
 </video>
 
-# 3D Perception & Autonomous Human-Following Pipeline
+# 3D Perceptions & Autonomous Human-Following Pipeline
 ### High-Performance Robotics Integration: ROS2 | ZED Stereo | Ouster LiDAR | AgileX Tracer
 
 ## 🚀 Overview
