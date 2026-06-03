@@ -89,7 +89,8 @@ pip install pyzed
 
 
 # Run the project
-python3 zed-color.py
+cd zed_follower
+python3 main.py
 ```
 
 
