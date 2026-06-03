@@ -26,14 +26,14 @@ The practical goal is to support hands-free mobile assistance. A robot like this
        muted="muted" 
        loop="loop" 
        style="max-width: 100%;">
-  Your browser does not support the video tag.
+  Your browser does not support the video tag..
 </video>
 
 
 ## Software Architecture
 Below the diagram shows the modular architecture of the current system. The logic is separated into camera input, perception, feature extraction, identity/state management, and safety-aware control.
 <p align="center">
-  <img src="assets/personfollowing-arch.png" alt="Software architecture diagram for the Human-Aware Visual Tracking System" width="900">
+  <img src="assets/archfinal.png" alt="Software architecture diagram for the Human-Aware Visual Tracking System" width="900">
 </p>
 
 ## Body Keypoints
