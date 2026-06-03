@@ -1,4 +1,24 @@
-# Zed-Detection Demo
+
+
+
+# Human-Aware Visual Tracking System
+### Real-Time Person Following, Target Re-Identification, and Safety-Aware Control with ZED Stereo Vision
+
+![Python](https://img.shields.io/badge/Python-3.x-blue)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green)
+![NumPy](https://img.shields.io/badge/NumPy-Numerical%20Computing-lightblue)
+![ZED](https://img.shields.io/badge/ZED-Stereo%20Vision-purple)
+![TensorRT](https://img.shields.io/badge/TensorRT-Optional%20Re--ID-orange)
+![License](https://img.shields.io/badge/License-MIT-black)
+##  Project Overview
+The goal of this project is to recognize a selected person, lock onto them, and follow them safely as they walk through a changing environment. I developed this system for a mobile robot using ZED stereo vision, body tracking, color-based target selection, and person re-identification.
+
+The main technical challenge is that person-following is difficult in real-world environments. The environment can change quickly, someone may block the camera, lighting conditions may shift, and another person may appear wearing similar colors. When this happens, a simple tracking system can lose the target or start following the wrong person.
+
+To solve this, the system uses multiple signals instead of relying on only one method. It combines torso-region color detection, 3D position tracking, target-locking logic, and AI-based re-identification to decide whether the detected person is the same person the robot was following or a different person.
+
+The practical goal is to support hands-free mobile assistance. A robot like this could carry heavy tools, equipment, or supplies while simply following a person as they walk. This could be useful in busy spaces such as hospitals, airports, campuses, warehouses, and laboratories, where the robot needs to follow reliably without losing the selected person.
+
 
 <video src="https://github.com/user-attachments/assets/6ef8f8bb-d1a6-4df6-95c7-5e376df29d8e" 
        controls="controls" 
@@ -9,38 +29,88 @@
   Your browser does not support the video tag.
 </video>
 
-# 3D Perceptions & Autonomous Human-Following Pipeline
-### High-Performance Robotics Integration: ROS2 | ZED Stereo | Ouster LiDAR | AgileX Tracer
 
-## 🚀 Overview
-This repository showcases an advanced perception-to-control pipeline developed for the [AgileX Tracer](https://global.agilex.ai/products/tracer) mobile base. I engineered a robust **Target Re-Identification (Re-ID)** system that allows the robot to autonomously track and follow a specific human subject while navigating dynamic environments using multi-sensor fusion.
+## Software Architecture
+Below the diagram shows the modular architecture of the current system. The logic is separated into camera input, perception, feature extraction, identity/state management, and safety-aware control.
+<p align="center">
+  <img src="assets/personfollowing-arch.png" alt="Software architecture diagram for the Human-Aware Visual Tracking System" width="900">
+</p>
 
-## 🛠 The Technical Stack
+## Body Keypoints
 
-### **Hardware & Sensors**
-* **Mobile Base:** [AgileX Tracer](https://global.agilex.ai/products/tracer) – A high-speed, dual-wheel differential drive AGV.
-* **Vision & Depth:** [Stereolabs ZED](https://www.stereolabs.com/docs/ros2/ros2-robot-integration) – Used for high-resolution stereo depth mapping and 3D spatial coordinate extraction.
-* **LiDAR:** [Ouster OS1](https://ouster.com/products/hardware/os1-lidar-sensor) – Integrated for high-fidelity spatial awareness and environmental SLAM.
+This project uses ZED BODY_38 keypoints to estimate the torso region of a detected person. Shoulder and hip keypoints are used to define the shirt area for HSV color matching.
 
-### **Software & Libraries**
-* **Middleware:** **ROS2 (Robot Operating System)** – Orchestrates communication between the camera, LiDAR, and motor controllers.
-* **Inference Engine:** **PyTorch** & **torchreid** – Powers the OSNet model for real-time person re-identification.
-* **Vision Processing:** **OpenCV (cv2)** – Image manipulation, bounding box logic, and UI overlays.
-* **Math & Logic:** `NumPy` & `SciPy` – Used for Euclidean distance calculations and heading geometry.
+<p align="center">
+  <img src="https://www.stereolabs.com/docs/body-tracking/images/keypoints_body38.png" 
+       alt="ZED BODY_38 body tracking keypoints" 
+       width="650">
+</p>
 
-## 🧠 Engineering Challenges Solved
+<p align="center">
+  <em>ZED BODY_38 keypoint layout used for torso-region extraction.</em>
+</p>
 
-### 1. Robust Target Re-Identification
-Standard color-based trackers fail during occlusions. I implemented an inference-based Re-ID logic that creates a unique feature embedding for the target.
-* **The Result:** The robot can distinguish between multiple people and "wait" to re-acquire the specific target once they reappear, preventing accidental tracking of bystanders.
+##  Technical Stack & Setup
 
-### 2. Multi-Sensor Spatial Fusion
-I fused 2D visual detections with 3D point cloud data to generate precise navigation vectors:
-* **Distance Calculation:** $d = \sqrt{x^2 + y^2 + z^2}$ using the ZED Depth API.
-* **Heading Control:** $\theta = \arctan\left(\frac{x}{z}\right)$ to maintain centering and calculate steering angle.
-* **Environment Mapping:** Utilized the Ouster LiDAR via `mapper_params_online_async_ouster.yaml` for simultaneous localization and mapping (SLAM), ensuring the robot avoids obstacles while following.
+### Technical Stack
 
-## 📂 Key Files & Contributions
-* **`zed-color.py`**: The core control loop integrating vision, Re-ID, and ROS2 command generation.
-* **`nav2_params_tracer_ouster_slam.yaml`**: Custom configuration for the Nav2 stack, optimizing the Ouster LiDAR for the Tracer base.
-* **`osnet_x025_reid.onnx`**: The optimized inference model used for high
+**Hardware**
+- **Mobile Base:** [AgileX Tracer](https://global.agilex.ai/products/tracer)
+- **Vision & Depth:** [Stereolabs ZED](https://www.stereolabs.com/en-us)
+- **LiDAR:** [Ouster OS1](https://ouster.com/products/hardware/os1-lidar-sensor)
+
+**Software**
+- **[Python](https://www.python.org/)** – main implementation language
+- **[OpenCV](https://opencv.org/)** – image processing, bounding boxes, and UI overlays
+- **[NumPy](https://numpy.org/) / [SciPy](https://scipy.org/)** – distance calculations and heading geometry
+- **[ZED SDK](https://www.stereolabs.com/en-us/developers/release) / [pyzed](https://www.stereolabs.com/docs/app-development/python/install)** – stereo vision, depth, and body tracking
+- **[TensorRT](https://developer.nvidia.com/tensorrt) / [PyCUDA](https://documen.tician.de/pycuda/)** – optional OSNet Re-ID inference
+- **[ROS2](https://docs.ros.org/en/humble/index.html)** – optional robot-control interface for publishing velocity commands
+
+
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/bagherhasani/Zed-Detection.git
+cd Zed-Detection
+
+# Create a virtual environment to keep it clean
+python3 -m venv .venv
+source .venv/bin/activate
+
+
+# Install Python dependencies
+pip install numpy opencv-python scipy
+
+# Install ZED Python API
+pip install pyzed
+
+
+# Run the project
+python3 zed-color.py
+```
+
+
+
+## Engineering Challenges
+
+### Target Consistency and Re-Identification
+
+A simple color tracker can lose the target when the person is occluded, lighting changes, or another person appears with similar clothing. To reduce accidental switching, I added target-locking logic and optional AI-based Re-ID using appearance embeddings.
+
+### Real-Time Position and Heading Estimation
+
+The system uses the ZED camera's 3D body position to estimate the target's distance and heading relative to the robot.
+
+- **Distance:** `d = sqrt(x² + y² + z²)`
+- **Heading:** `theta = atan2(x, z)`
+
+These values are used to generate safe following behavior, including turning toward the target, maintaining a desired distance, and stopping when the target is too close.
+
+### Safety and Find Control
+
+The control logic uses conservative speed limits and safety rules. The robot stops when the target is too close and rotates in place when searching instead of moving forward blindly.
+
+
