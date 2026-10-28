@@ -20,7 +20,7 @@ To solve this, the system uses multiple signals instead of relying on only one m
 The practical goal is to support hands-free mobile assistance. A robot like this could carry heavy tools, equipment, or supplies while simply following a person as they walk. This could be useful in busy spaces such as hospitals, airports, campuses, warehouses, and laboratories, where the robot needs to follow reliably without losing the selected person.
 
 
-<video src="https://github.com/bagherhasani/Zed-Detection/releases/download/demo_follwer_final/BaqerHassani-FollowDemoFinal_v1_4.mp4"
+<video src="https://github.com/user-attachments/assets/b92628e4-b646-4258-82a1-30fcf4735eb8"
        controls="controls"
        autoplay="autoplay"
        muted="muted"
