@@ -1,5 +1,5 @@
 
-
+https://github.com/user-attachments/assets/b92628e4-b646-4258-82a1-30fcf4735eb8
 
 # Human-Aware Visual Tracking System
 ### Real-Time Person Following, Target Re-Identification, and Safety-Aware Control with ZED Stereo Vision
@@ -20,14 +20,6 @@ To solve this, the system uses multiple signals instead of relying on only one m
 The practical goal is to support hands-free mobile assistance. A robot like this could carry heavy tools, equipment, or supplies while simply following a person as they walk. This could be useful in busy spaces such as hospitals, airports, campuses, warehouses, and laboratories, where the robot needs to follow reliably without losing the selected person.
 
 
-<video src="https://github.com/user-attachments/assets/b92628e4-b646-4258-82a1-30fcf4735eb8"
-       controls="controls"
-       autoplay="autoplay"
-       muted="muted"
-       loop="loop"
-       style="max-width: 100%;">
-  Your browser does not support the video tag.
-</video>
 
 
 ## Software Architecture
