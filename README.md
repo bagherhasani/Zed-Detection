@@ -20,13 +20,13 @@ To solve this, the system uses multiple signals instead of relying on only one m
 The practical goal is to support hands-free mobile assistance. A robot like this could carry heavy tools, equipment, or supplies while simply following a person as they walk. This could be useful in busy spaces such as hospitals, airports, campuses, warehouses, and laboratories, where the robot needs to follow reliably without losing the selected person.
 
 
-<video src="https://github.com/user-attachments/assets/6ef8f8bb-d1a6-4df6-95c7-5e376df29d8e" 
-       controls="controls" 
-       autoplay="autoplay" 
-       muted="muted" 
-       loop="loop" 
+<video src="https://res.cloudinary.com/qm2uslnt/video/upload/BaqerHassani-FollowDemoFinal_v1_4.mp4"
+       controls="controls"
+       autoplay="autoplay"
+       muted="muted"
+       loop="loop"
        style="max-width: 100%;">
-  Your browser does not support the video tag..
+  Your browser does not support the video tag.
 </video>
 
 
